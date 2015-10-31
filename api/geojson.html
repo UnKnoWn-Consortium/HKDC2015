@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uploader</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="papaparse.min.js"></script>
+</head>
+<body data-ng-app="main" data-ng-controller="bodyCtrl as ctrl" data-ng-init="ctrl.init()">
+uploading... please check consoles....
+<script>
+    var app = angular.module('main', []);
+    app.run(['$http', function($http){
+        $http.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
+    }]);
+    app.controller('bodyCtrl', ['$http', '$filter', function($http, $filter){
+        this.init = function(){
+            $http.get('geojson.json').then(function(json){
+                var constituentTemp = json.data.features;
+                constituentTemp.forEach(function(val, ind, arr){
+                    $http.post('http://www.unknownsys.com:4444/api/geojson', val).then(function(res){
+                        console.log(res);
+                    }, function(res){
+                        console.log(res);
+                    });
+                });
+            }, function(res){
+                console.log(res);
+            });
+        }
+    }])
+</script>
+</body>
+</html>

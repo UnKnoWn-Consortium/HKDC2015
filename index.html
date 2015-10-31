@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>District Council Election 2015 Live Tracker</title>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Lato:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style/li-scroller.css" rel="stylesheet">
+    <link href="style/main.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="script/vendor/jquery.li-scroller.1.0.js"></script>
+    <script src="script/vendor/jquery.transit.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+    <script src="script/vendor/ui-bootstrap-tpls-0.14.2.min.js"></script>
+    <script src="script/app.js"></script>
+</head>
+<body data-ng-app="main" data-ng-controller="bodyCtrl as masterCtrl" data-ng-init="masterCtrl.init()">
+<nav class="navbar-fixed-top">
+    <div id="heading">
+        <img id="logo" src="image/logo.svg">
+        <h1>DC2015 Live Tracker</h1>
+    </div>
+    <div id="about" class="btn-group">
+        <button type="button" class="btn btn-lg btn-default">About</button>
+    </div>
+</nav>
+<section class="search" data-ng-controller="searchCtrl as ctrl">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search..." data-ng-model="ctrl.searchKeyword">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default" data-uib-tooltip="Get My Location"  data-tooltip-append-to-body="true" data-tooltip-placement="bottom"><span class="glyphicon glyphicon-pushpin"></span></button>
+            <button type="button" class="btn btn-default" data-uib-tooltip="Select Location by Map" data-tooltip-append-to-body="true" data-tooltip-placement="bottom"><span class="glyphicon glyphicon-globe"></span></button>
+        </div>
+    </div>
+</section>
+<section class="workspace">
+    <div class="region" data-ng-repeat="(key, value) in masterCtrl.districts" data-ng-class="key">
+        <h1>{{masterCtrl.regionNameRefactor(key)}}</h1>
+        <div class="district" data-ng-repeat="dist in value | orderBy:masterCtrl.sorter | filter:masterCtrl.keyword" data-ng-click="masterCtrl.districtClick(key, dist)">
+            <div class="icon">
+                <img data-ng-src="image/{{dist.iconSrc}}">
+                <h2>{{dist.ename}}</h2>
+                <h2 data-ng-show="!ctrl.expanded">{{dist.cname}}</h2>
+            </div>
+            <div class="seat-map">
+                <h2>{{dist.seats.length - dist.exOfficio}} + {{dist.exOfficio}} Seats</h2>
+                <div class="seat" data-ng-repeat="constituent in dist.seats | orderBy:ctrl.sorter:true" data-ng-class="constituent.type" data-ng-click="ctrl.clickConstituent(constituent)">
+                    <span class="glyphicon glyphicon-user"></span>
+                </div>
+            </div>
+        </div>
+        <h1>{{masterCtrl.regionNameRefactor(key)}}</h1>
+    </div>
+</section>
+</body>
+</html>

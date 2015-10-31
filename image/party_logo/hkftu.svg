@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="500" height="500" viewBox="-1100 -1100 2200 2200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+  <desc>Logo of HKFTU</desc>
+  <circle r="692" stroke="red" stroke-width="264" fill="none" />
+  <g id="w2">
+    <polyline id="w1" points="111,700 158,1000 -158,1000 -111,700" fill="red" />
+    <use xlink:href="#w1" transform="rotate(36)" />
+    <use xlink:href="#w1" transform="rotate(72)" />
+    <use xlink:href="#w1" transform="rotate(108)" />
+    <use xlink:href="#w1" transform="rotate(144)" />
+  </g>
+  <use xlink:href="#w2" transform="rotate(180)" />
+  <g id="g" transform="translate(0,-560)">
+    <polyline id="g1" points="0,0 0,560 200,560" fill="red" transform="rotate(18)" />
+    <use xlink:href="#g1" transform="scale(-1,1)" />
+  </g>
+  <g id="g2" transform="rotate(72)">
+    <use xlink:href="#g" />
+    <use xlink:href="#g" transform="rotate(72)" />
+  </g>
+  <use xlink:href="#g2" transform="scale(-1,1)" />
+</svg>

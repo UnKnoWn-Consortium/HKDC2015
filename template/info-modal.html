@@ -1,0 +1,93 @@
+<div class="info-box-modal">
+    <h1>
+        <img src="image/region.svg" class="region-icon"> {{ctrl.regionName}}
+    </h1>
+    <div class="space">
+        <div>
+            <div class="district">
+                <div class="icon">
+                    <img data-ng-src="image/{{ctrl.district.iconSrc}}">
+                    <h2>{{ctrl.district.ename}}</h2>
+                </div>
+                <div class="info">
+                    <table>
+                        <tr>
+                            <th><h3 class="table-head">Population:&nbsp;</h3></th>
+                            <th><h3>{{ctrl.district.population | number:0}}</h3></th>
+                        </tr>
+                        <tr>
+                            <th><h3 class="table-head">Electors:&nbsp;</h3></th>
+                            <th><h3>{{ctrl.district.electors | number:0}}</h3></th>
+                        </tr>
+                        <tr>
+                            <th><h3 class="table-head">Seats:&nbsp;</h3></th>
+                            <th><h3>{{ctrl.district.seats.length - ctrl.district.exOfficio}} (Elected)</h3></th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th><h3>{{ctrl.district.exOfficio}} (Ex Officio)</h3></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="seat-map">
+                <h2>{{ctrl.district.ename}}<br>District Council</h2>
+                <h3>{{ctrl.district.seats.length - ctrl.district.exOfficio}} + {{ctrl.district.exOfficio}} Seats</h3>
+                <div class="constituent">
+                    <div class="seat" data-ng-repeat="constituent in ctrl.district.seats | filter:{type: 'constituent'} | orderBy:ctrl.sorter" data-ng-click="ctrl.clickConstituent(constituent)">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <div class="cacode">{{constituent.cacode}}</div>
+                    </div>
+                </div>
+                <div class="ex-officio">
+                    <div class="seat" data-ng-repeat="constituent in ctrl.district.seats | filter:{type: 'ex-officio'} | orderBy:ctrl.sorter" data-ng-click="ctrl.clickConstituent(constituent)">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <div class="cacode">E. O.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="constituent-info" data-ng-class="ctrl.genClass(ctrl.regionName, !ctrl.constituent)">
+            <h2 data-ng-if="!ctrl.constituent">Click an Avatar inside the Seat Map to select a Constituent</h2>
+            <div>
+                <h1 class="cacode" data-ng-if="!!ctrl.constituent && ctrl.constituent.type == 'constituent'">{{ctrl.constituent.cacode}}</h1>
+                <h1 class="ex-officio text-capitalize" data-ng-if="!!ctrl.constituent && ctrl.constituent.type == 'ex-officio'" data-ng-bind="ctrl.constituent.type"></h1>
+                <h3 class="ex-officio" data-ng-if="ctrl.constituent.type == 'ex-officio'">Chairmen of Rural Committees are ex-officio members in District Councils in the New Territories.</h3>
+                <div class="logo" data-ng-if="ctrl.constituent.type == 'constituent'">
+                    <h1 data-ng-if="!!ctrl.constituent">{{ctrl.constituent.ename}}</h1>
+                    <h1 data-ng-if="!!ctrl.constituent" class="cht">{{ctrl.constituent.cname}}</h1>
+                    <h1 data-ng-if="!!!ctrl.constituent">{{ctrl.district.ename}}</h1>
+                    <h1 data-ng-if="!!!ctrl.constituent" class="cht">{{ctrl.district.cname}}</h1>
+                </div>
+                <div class="data" data-ng-if="ctrl.constituent.type == 'constituent'">
+                    <h3 data-ng-if="!!ctrl.constituent">Population: {{ctrl.constituent.population | number:0}}</h3>
+                    <h3 data-ng-if="!!ctrl.constituent" style="border-bottom: solid 1px">Electors: {{ctrl.constituent.electors | number:0}}</h3>
+                    <h3 data-ng-if="!!ctrl.constituent">Registration Rate: {{(ctrl.constituent.electors / ctrl.constituent.population * 100) | number:1}}%</h3>
+                </div>
+                <div class="candidate" data-ng-if="ctrl.constituent.type == 'constituent'"><h4>Candidates</h4></div>
+                <div class="list-group" data-ng-if="ctrl.constituent.type == 'constituent'">
+                    <div class="list-group-item" data-ng-repeat="candidate in ctrl.constituent.candidates | orderBy:'candidate_no'">
+                        <div class="flex-content">
+                            <div data-ng-if="!!candidate.candidate_no" class="candidate_no">
+                                <h1 data-ng-bind="candidate.candidate_no"></h1>
+                            </div>
+                            <img class="candidate-photo" data-ng-if="candidate.sex == 'M'" src="image/avatar_m.svg">
+                            <img class="candidate-photo" data-ng-if="candidate.sex == 'F'" src="image/avatar_f.svg">
+                            <div>
+                                <h3 class="list-group-item-heading">{{candidate.ename}} ({{candidate.sex}})<br><span data-ng-if="candidate.eAlias != ''"> ({{candidate.eAlias}})</span></h3>
+                                <h4 class="list-group-item-heading">{{candidate.eAffiliation[0]}}<span data-ng-if="candidate.eAffiliation[0] == ''">No Affiliation Declared</span></h4>
+                                <p class="list-group-item-text">{{candidate.eOccupation[0]}}<span data-ng-if="candidate.eOccupation[0] == ''">No Occupation Declared</span></p>
+                            </div>
+                        </div>
+                        <img data-ng-if="candidate.win && ctrl.constituent.finalized" class="elected" alt="elected" src="image/elected.svg">
+                        <uib-progressbar data-ng-class="ctrl.progressBarAnimation()" max="ctrl.constituent.electors" value="ctrl.progressBarVal(candidate)" type="{{ctrl.progressBarType(candidate)}}">
+                            <span data-ng-if="ctrl.constituent.candidates.length > 1">{{candidate.vote}} / {{ctrl.constituent.electors}} ({{candidate.vote / ctrl.constituent.electors * 100}}%)</span>
+                            <span data-ng-if="ctrl.constituent.candidates.length == 1">Walkover</span>
+                        </uib-progressbar>
+                    </div>
+                </div>
+                <p class="text-center list-info" data-ng-if="ctrl.constituent.type == 'constituent'">All vote counts are provisional only</p>
+            </div>
+        </div>
+    </div>
+</div>

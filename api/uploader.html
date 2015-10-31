@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uploader</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="papaparse.min.js"></script>
+</head>
+<body data-ng-app="main" data-ng-controller="bodyCtrl as ctrl" data-ng-init="ctrl.init()">
+uploading... please check consoles....
+<script>
+    var districtRegionTable = {
+        "Central and Western": "Hong-Kong-Island",
+        "Wan Chai": "Hong-Kong-Island",
+        "Eastern": "Hong-Kong-Island",
+        "Southern": "Hong-Kong-Island",
+        "Yau Tsim Mong": "Kowloon",
+        "Sham Shui Po": "Kowloon",
+        "Kowloon City": "Kowloon",
+        "Wong Tai Sin": "Kowloon",
+        "Kwun Tong": "Kowloon",
+        "Tsuen Wan": "New-Territories",
+        "Tuen Mun": "New-Territories",
+        "Yuen Long": "New-Territories",
+        "North": "New-Territories",
+        "Tai Po": "New-Territories",
+        "Sai Kung": "New-Territories",
+        "Sha Tin": "New-Territories",
+        "Kwai Tsing": "New-Territories",
+        "Islands": "New-Territories"
+    };
+    var districtIconTable = {
+        "Central and Western": "dc_logo/Central_and_Western.png",
+        "Wan Chai": "dc_logo/Wan_Chai.png",
+        "Eastern": "dc_logo/Eastern.png",
+        "Southern": "dc_logo/Southern.png",
+        "Yau Tsim Mong": "dc_logo/Yau_Tsim_Mong.png",
+        "Sham Shui Po": "dc_logo/Sham_Shui_Po.png",
+        "Kowloon City": "dc_logo/Kowloon_City.png",
+        "Wong Tai Sin": "dc_logo/Wong_Tai_Sin.png",
+        "Kwun Tong": "dc_logo/Kwun_Tong.png",
+        "Tsuen Wan": "dc_logo/Tsuen_Wan.png",
+        "Tuen Mun": "dc_logo/Tuen_Mun.png",
+        "Yuen Long": "dc_logo/Yuen_Long.png",
+        "North": "dc_logo/North.png",
+        "Tai Po": "dc_logo/Tai_Po.png",
+        "Sai Kung": "dc_logo/Sai_Kung.png",
+        "Sha Tin": "dc_logo/Sha_Tin.png",
+        "Kwai Tsing": "dc_logo/Kwai_Tsing.png",
+        "Islands": "dc_logo/Islands.png"
+    };
+    var app = angular.module('main', []);
+    app.run(['$http', function($http){
+        $http.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
+    }]);
+    app.controller('bodyCtrl', ['$http', '$filter', function($http, $filter){
+        this.init = function(){
+            Papa.parse("conPop.csv", {
+                download: true,
+                dynamicTyping: true,
+                header: true,
+                complete: function(popEle) {
+                    console.log(popEle.data);
+                    var constituentPopEle = popEle.data;
+                    $http.get('dc2015.json').then(function(json){
+                        var districtTemp = json.data.features.slice(0, 18);
+                        var constituentTemp = json.data.features.slice(18);
+                        var districts = [];
+                        console.log(districtTemp);
+                        console.log(constituentTemp);
+                        districtTemp.forEach(function(val, ind, arr){
+                            var temp = {
+                                "region": districtRegionTable[val.properties.ename],
+                                "ename": val.properties.ename,
+                                "cname": val.properties.cname,
+                                "population": Number(val.properties.population),
+                                "electors": Number(val.properties.electors),
+                                "iconSrc": districtIconTable[val.properties.ename],
+                                "exOfficio": Number(val.properties.exOfficio),
+                                "GeoJSON": {
+                                    "type": val.type,
+                                    "geometry": val.geometry
+                                },
+                                "seats": []
+                            };
+                            for (var i = 0; i < temp.exOfficio; i++){
+                                temp.seats.push({
+                                    "type": "ex-officio"
+                                })
+                            }
+                            districts.push(temp);
+                        });
+                        Papa.parse("DC2015Candidates.csv", {
+                            download: true,
+                            dynamicTyping: true,
+                            header: true,
+                            complete: function (candidates) {
+                                console.log(candidates.data);
+                                var histogram = {};
+                                candidates.data.forEach(function(val, ind, arr){
+                                    val.cAffiliation.split("/").forEach(function(val, ind, arr){
+                                        (!! histogram[val]) ? (histogram[val] ++) : (histogram[val] = 1);
+                                    })
+                                });
+                                console.log(histogram);
+                                histogram = {};
+                                candidates.data.forEach(function(val, ind, arr){
+                                    val.eAffiliation.split("/").forEach(function(val, ind, arr){
+                                        (!! histogram[val]) ? (histogram[val] ++) : (histogram[val] = 1);
+                                    })
+                                });
+                                console.log(histogram);
+                                constituentTemp.forEach(function(val, ind, arr) {
+                                    var targetDist = $filter('filter')(districts, {"ename": val.properties.DISTRICT_E})[0];
+                                    var selfPopEle = $filter('filter')(constituentPopEle, {"cacode": val.properties.CACODE})[0];
+                                    var selfCandidates = $filter('filter')(candidates.data, {"cacode": val.properties.CACODE});
+                                    selfCandidates.map(function(obj, ind, arr){
+                                        obj.eAffiliation = obj.eAffiliation.split("/");
+                                        obj.cAffiliation = obj.cAffiliation.split("/");
+                                        obj.eOccupation = obj.eOccupation.split("/");
+                                        obj.cOccupation = obj.cOccupation.split("/");
+                                        obj.vote = 0;
+                                        obj.win = (obj.win != "0");
+                                        return obj;
+                                    });
+                                    var temp = {
+                                        "type": "constituent",
+                                        "cacode": val.properties.CACODE,
+                                        "cname": val.properties.CNAME,
+                                        "ename": val.properties.ENAME,
+                                        "population": selfPopEle.population,
+                                        "electors": selfPopEle.electors,
+                                        "GeoJSON": {
+                                            "type": val.type,
+                                            "geometry": val.geometry
+                                        },
+                                        "finalized": false,
+                                        "candidates": selfCandidates
+                                    };
+                                    if (selfCandidates.length == 1 && selfCandidates[0]["win"] == true){
+                                        temp.finalized = true;
+                                    }
+                                    targetDist.seats.push(temp);
+                                });
+                                districts.forEach(function(val, ind, arr){
+                                    $http.post('http://www.unknownsys.com:4444/api/districts', val).then(function(res){
+                                        console.log(res);
+                                    }, function(res){
+                                        console.log(res);
+                                    });
+                                });
+                                /*$http.post('http://www.unknownsys.com:4444/api/districts', districts[0]).then(function(res){
+                                    console.log(res);
+                                }, function(res){
+                                    console.log(res);
+                                });*/
+                            }
+                        });
+                    }, function(res){
+                        console.log(res);
+                    });
+                }
+            });
+
+        }
+    }])
+</script>
+</body>
+</html>

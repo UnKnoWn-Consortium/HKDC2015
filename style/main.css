@@ -1,0 +1,628 @@
+@charset "utf-8";
+@import url(http://fonts.googleapis.com/earlyaccess/cwtexkai.css);
+
+body {
+    font-family: 'Lato', 'cwTeXKai', sans-serif;
+}
+
+nav {
+    position: relative;
+    height: 80px;
+    background: #4D5359;
+    box-shadow: 1px 1px 5px rgba(45, 45, 45, 1);
+    border-bottom: solid 1px rgba(45, 45, 45, 1);
+}
+
+nav img#logo {
+    height: 70px;
+}
+
+nav #about {
+    float: right;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 10px;
+}
+
+nav #heading {
+    padding-top: 5px;
+    display: inline-block;
+}
+
+nav h1 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 46px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+section.search {
+    position: fixed;
+    top: 100px;
+    width: 100%;
+}
+
+section.search {
+    position: relative;
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+section.search input {
+    padding: 0 12px 0 35px;
+    font-size: 18px;
+    color: #555860;
+    background: white url("http://cssdeck.com/uploads/media/items/5/5JuDgOa.png") 8px 8px no-repeat;
+    background-size: 18px 18px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #a8acbc #babdcc #c0c3d2;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -moz-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -ms-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -o-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+}
+
+section.workspace {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.region {
+    position: relative;
+    margin: 20px;
+    border: solid 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    box-shadow: 2px 2px 0 rgba(100, 100, 100, 1), inset 1px 1px 5px rgba(0, 0, 0, 1), inset -1px -1px 5px rgba(0, 0, 0, 1);
+    background: url("../image/linedpaper_@2x.png");
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.region > div {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+
+.region > h1 {
+    padding: 0 10px;
+    font-weight: bold;
+    font-size: 22px;
+    position: absolute;
+    top: -24px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.region > h1:last-child {
+    top: auto;
+    bottom: -24px;
+}
+
+.region.Hong-Kong-Island {
+    border-color: #508484;
+}
+
+.region.Hong-Kong-Island > h1 {
+    color: #a5c8c8;
+    text-shadow: -1px -1px 1px #335454, 1px -1px 1px #335454, -1px 1px 1px #335454, 1px 1px 1px #335454;
+}
+
+.region {
+    border-color: #846a50;
+}
+
+.region.Kowloon > h1 {
+    color: #beaa95;
+    text-shadow: -1px -1px 1px #443729, 1px -1px 1px #443729, -1px 1px 1px #443729, 1px 1px 1px #443729;
+}
+
+.region.New-Territories {
+    border-color: #50846a;
+}
+
+.region.New-Territories > h1 {
+    color: #95bfaa;
+    text-shadow: -1px -1px 1px #335444, 1px -1px 1px #335444, -1px 1px 1px #335444, 1px 1px 1px #335444;
+}
+
+.district {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px rgba(45, 45, 45, 1);
+    padding: 5px;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 1);
+    user-select: none;
+    cursor: pointer;
+    height: 345px;
+    transition: all ease-in-out 1s;
+}
+
+.district:hover {
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 1);
+}
+
+.district .icon {
+    text-align: center;
+    padding: 10px 0 5px;
+    width: 200px;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.district .icon img {
+    width: 160px;
+}
+
+.district h1, .district h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.seat-map {
+    user-select: none;
+}
+
+.district .seat-map {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    padding: 5px;
+    width: 250px;
+}
+
+.district .seat-map h2 {
+    width: 100%;
+}
+
+.district .seat-map .seat {
+    position: relative;
+    border: solid 2px rgba(100, 100, 100, 1);
+    border-radius: 2px;
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.district .seat-map .seat span.glyphicon {
+    font-size: 28px;
+}
+
+.district .seat-map .seat.ex-officio span {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.table-head {
+    font-weight: bold;
+    text-align: right;
+}
+
+.modal-content {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.info-box-modal {
+    position: relative;
+    margin: 20px 10px;
+    cursor: default;
+    transition: all 1s ease-in-out;
+}
+
+.info-box-modal > h1 {
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.info-box-modal > h1:before {
+    position: absolute;
+    content: "\2a";
+    font-size: 56px;
+    padding: 3px 10px;
+    left: 0;
+}
+
+.info-box-modal > h1:after {
+    position: absolute;
+    content: "\2a";
+    font-size: 56px;
+    padding: 3px 10px;
+    right: 0;
+}
+
+.info-box-modal .region-icon {
+    height: 45px;
+    vertical-align: text-top;
+}
+
+.info-box-modal .space {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.district .district {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.info-box-modal .district {
+    position: relative;
+    flex-direction: row;
+    border: solid 1px rgba(45, 45, 45, 1);
+    cursor: default;
+    box-shadow: 2px 2px 10px rgba(45, 45, 45, 1);
+    margin: 10px;
+    width: 450px;
+    height: inherit;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.info-box-modal .icon {
+    border-right: dashed 2px rgba(45, 45, 45, 1);
+    width: 150px;
+}
+
+.info-box-modal .icon h2 {
+    font-size: 22px;
+}
+
+.info-box-modal .icon img {
+    height: 95px;
+    width: 95px;
+}
+
+.info-box-modal .info {
+    padding: 5px;
+    padding-left: 15px;
+}
+
+.info-box-modal h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.info-box-modal .seat-map {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    width: 450px;
+    border: solid 1px rgba(45, 45, 45, 1);
+    box-shadow: 2px 2px 10px rgba(45, 45, 45, 1);
+    border-radius: 8px;
+    margin: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.info-box-modal .seat-map h2 {
+    width: 100%;
+    text-align: center;
+    margin: 5px 10px 10px;
+    font-weight: bold;
+}
+
+.info-box-modal .seat-map h3 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.info-box-modal .seat-map .seat {
+    position: relative;
+    border: solid 2px rgba(100, 100, 100, 1);
+    border-radius: 4px;
+    height: 56px;
+    width: 42px;
+    margin: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.info-box-modal .seat-map .constituent, .info-box-modal .seat-map .ex-officio {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.info-box-modal .seat-map .ex-officio .seat {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.info-box-modal .seat-map .seat:active {
+    box-shadow: inset 1px 1px 3px rgba(45, 45, 45, 0.8), inset -1px -1px 3px rgba(45, 45, 45, 0.8);
+}
+
+.info-box-modal .seat-map .seat span.glyphicon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 40px;
+}
+
+.info-box-modal .seat-map .seat .cacode {
+    position: relative;
+    text-align: center;
+    bottom: -20px;
+    user-select: none;
+}
+
+.constituent-info {
+    position: relative;
+    width: 380px;
+    margin: 10px;
+    background: rgba(255, 255, 255, 1);
+    border: solid 1px rgba(125, 125, 125, 1);
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(45, 45, 45, 1);
+    fill: rgba(200, 200, 200, 1);
+    min-height: 750px;
+    z-index: 100;
+}
+
+.constituent-info.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.constituent-info.empty h2 {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: inset 0 -1px 5px black, inset 0 1px 5px black;
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+}
+
+.constituent-info.Hong-Kong-Island {
+    background: url("../image/hki_bg.png") repeat;
+    background-size: 111%;
+}
+
+.constituent-info.Kowloon {
+    background: url("../image/kw_bg.jpg") repeat;
+    background-size: 150%;
+}
+
+.constituent-info.New-Territories {
+    background: url("../image/nt_bg.jpg") repeat;
+    background-size: 105%;
+}
+
+.constituent-info h1.cacode {
+    font-size: 72px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    text-shadow: -2px -2px 1px #000, 2px -2px 1px #000, -2px 2px 1px #000, 2px 2px 1px #000;
+    color: rgba(255, 255, 255, 1);
+    text-align: left;
+}
+
+.constituent-info .ex-officio {
+    background: linear-gradient(0deg, rgba(200, 200, 200, 1), white 5%, white 95%, rgba(200, 200, 200, 1));
+    margin-top: 40px;
+    padding: 15px;
+}
+
+.constituent-info h1.ex-officio {
+    font-size: 56px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.constituent-info .ex-officio h3 {
+    text-align: justify;
+    padding: 0 20px 20px 0;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.constituent-info h1, .constituent-info h3 {
+    margin-top: 0;
+}
+
+.constituent-info .logo {
+    background: white;
+    border-radius: 14px;
+    border: solid 10px black;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 2px;
+    width: 360px;
+    color: black;
+    box-shadow: 2px 2px 10px rgba(45, 45, 45, 0.8);
+}
+
+.constituent-info .logo h1 {
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.constituent-info .logo h1.cht {
+    font-family: 'cwTeXKai', sans-serif;
+    font-size: 42px;
+}
+
+.constituent-info .data {
+    padding: 10px 10px;
+    background: linear-gradient(0deg, rgba(200, 200, 200, 1), white 5%, white 95%, rgba(200, 200, 200, 1));
+    box-shadow: inset 0 -1px 5px black;
+}
+
+.constituent-info .list-group {
+    margin-bottom: 0;
+    overflow-y: auto;
+    height: 300px;
+    border-bottom: solid 1px;
+    border-top: solid 1px;
+    color: black;
+    background-color: white;
+    box-shadow: inset 0 -1px 5px black;
+}
+
+.constituent-info .list-group .list-group-item {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 1);
+    background: linear-gradient(0deg, rgba(190, 190, 190, 1), white 5%, white 90%, rgba(210, 210, 210, 1));
+    padding: 0;
+}
+
+.constituent-info .list-group .list-group-item .flex-content {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.constituent-info .list-group .list-group-item .flex-content > div{
+    padding: 0 5px 0 10px;
+}
+
+.constituent-info .list-group .list-group-item .flex-content .candidate_no {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    padding: 2px;
+    margin-right: 2px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+}
+
+.constituent-info.Hong-Kong-Island .list-group .list-group-item .flex-content .candidate_no {
+    background: linear-gradient(180deg, rgba(170, 190, 210, 1), rgba(10, 100, 120, 1));
+}
+
+.constituent-info.Kowloon .list-group .list-group-item .flex-content .candidate_no {
+    background: linear-gradient(180deg, rgba(200, 180, 160, 1), rgba(140, 10, 10, 1));
+}
+
+.constituent-info.New-Territories .list-group .list-group-item .flex-content .candidate_no {
+    background: linear-gradient(180deg, rgba(80, 180, 170, 1), rgba(10, 100, 110, 1));
+}
+
+.constituent-info .list-group .list-group-item h3.list-group-item-heading {
+    padding-top: 10px;
+}
+
+.constituent-info .list-group .list-group-item img.candidate-photo {
+    width: 80px;
+}
+
+.constituent-info .list-group .list-group-item img.elected {
+    position: absolute;
+    right: 0;
+    bottom: -25px;
+    width: 60px;
+}
+
+.constituent-info .list-group .list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.constituent-info .list-group .list-group-item:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.constituent-info .list-group .list-group-item-heading {
+    font-weight: bold;
+}
+
+.constituent-info  .list-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: rgba(255, 255, 255, 1);
+    font-size: 18px;
+}
+
+.constituent-info .candidate h4 {
+    border-top: solid 1px;
+    margin: 0 auto;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: rgba(255, 255, 255, 1);
+}
+
+.constituent-info .progress {
+    margin-bottom: 0;
+    height: 24px;
+    border-top: solid 1px rgba(180, 180, 180, 1);
+    border-radius: 0;
+}
+
+.constituent-info .progress-bar {
+    font-size: 16px;
+}
+
+.constituent-info .progress-bar span {
+    color: rgba(255, 255, 255, 1);
+    white-space: nowrap;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
